@@ -27,7 +27,7 @@ function render(lines, bgImgData, secure, canvasSize, logoPos, complete) {
 
 			// Draw logo
 			var logoImg = new Image()
-			logoImg.src = "img/s-logo_standing_" + (logoPos ? "pos" : "neg") + ".svg"
+			logoImg.src = "img/s-logo/standing_" + (logoPos ? "pos" : "neg") + ".svg"
 			logoImg.onload = function() {
 				ctx.drawImage(this, 0.7580645161 * canvasSize, 1.185483871 * canvasSize, 0.1987903226 * canvasSize, 0.1741935484 * canvasSize)
 				

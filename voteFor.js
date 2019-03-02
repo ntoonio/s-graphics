@@ -49,7 +49,7 @@ function render(lines, bgImgData, secure, subText, canvasSize, logoPos, complete
 
 			// Draw logo
 			var logoImg = new Image()
-			logoImg.src = "img/s-logo_standing_" + (logoPos ? "pos" : "neg") + ".svg"
+			logoImg.src = "img/s-logo/standing_" + (logoPos ? "pos" : "neg") + ".svg"
 			logoImg.onload = function() {
 				ctx.drawImage(this, 820/1080*canvasSize, ctx.canvas.height - 250/1080*canvasSize, 0.1987903226*canvasSize, 0.1741935484*canvasSize)
 				
@@ -83,7 +83,3 @@ function generate(completion) {
 
 setup()
 document.getElementById("inp").addEventListener("change", readFile)
-
-render(["Albert", "Einstein"], "img/pattern_bg_ow_sq.png", "Österåker", "E=MC2", "1080", false, c => {
-	document.body.appendChild(c)
-})

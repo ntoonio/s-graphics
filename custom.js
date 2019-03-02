@@ -36,7 +36,7 @@ function render(json, complete) {
 			})
 			
 			var logoImg = new Image()
-			logoImg.src = "img/s-logo_" + json.logo.img.replace("-", "_") + ".svg"
+			logoImg.src = "img/s-logo/" + json.logo.img.replace("-", "_") + ".svg"
 
 			logoImg.onload = function() {
 				const l = json.logo
