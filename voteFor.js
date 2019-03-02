@@ -1,4 +1,8 @@
-function render(lines, bgImgData, secure, subText, canvasSize, complete) {
+function settings() {
+	return '<h1>Rösta på</h1><h3>Storlek</h3><select id="size"><option value="1080" selected>Fyrkant (1080x1080)</option><option value="7016">A1</option><option value="4960">A2</option><option value="3508">A3</option><option value="2480" selected>A4</option><option value="1748">A5</option><option value="1240">A6</option><option value="8350">B1</option><option value="5906">B2</option><option value="4169">B3</option><option value="2953">B4</option><option value="2079">B5</option><option value="1476">B6</option></select><h3>Bakgrundsbild</h3><input id="inp" type="file"><h3>Namn</h3><textarea id="name" cols="30" rows="2"></textarea><h3>Andra text</h3><input id="subText" value=""><p>Till exempel</p><ul><li>#27 kommunfullmäktige</li><li>Den 9 september</li><li>För vår framtid</li></ul><h3>Ett tryggare...</h3><input id="secure" type="text" value="Sverige"><h3>Logga</h3><p><b>Positiv</b> <input type="checkbox" id="logo_pos"></p>'
+}
+
+function render(lines, bgImgData, secure, subText, canvasSize, logoPos, complete) {
 	document.fonts.ready.then(function () {
 		var canvas = document.createElement("canvas")
 
@@ -45,7 +49,7 @@ function render(lines, bgImgData, secure, subText, canvasSize, complete) {
 
 			// Draw logo
 			var logoImg = new Image()
-			logoImg.src = "img/s-logo_standing_neg_1000.png"
+			logoImg.src = "img/s-logo_standing_" + (logoPos ? "pos" : "neg") + ".svg"
 			logoImg.onload = function() {
 				ctx.drawImage(this, 820/1080*canvasSize, ctx.canvas.height - 250/1080*canvasSize, 0.1987903226*canvasSize, 0.1741935484*canvasSize)
 				
@@ -53,10 +57,6 @@ function render(lines, bgImgData, secure, subText, canvasSize, complete) {
 			}
 		}
 	})
-}
-
-function settings() {
-	return '<h1>Rösta på</h1><h3>Storlek</h3><select id="size"><option value="1080" selected>Fyrkant (1080x1080)</option><option value="7016">A1</option><option value="4960">A2</option><option value="3508">A3</option><option value="2480" selected>A4</option><option value="1748">A5</option><option value="1240">A6</option><option value="8350">B1</option><option value="5906">B2</option><option value="4169">B3</option><option value="2953">B4</option><option value="2079">B5</option><option value="1476">B6</option></select><h3>Bakgrundsbild</h3><input id="inp" type="file"><h3>Namn</h3><textarea id="name" cols="30" rows="2"></textarea><h3>Andra text</h3><input id="subText" value=""><p>Till exempel</p><ul><li>#27 kommunfullmäktige</li><li>Den 9 september</li><li>För vår framtid</li></ul><h3>Ett tryggare...</h3><input id="secure" type="text" value="Sverige">'
 }
 
 var imgData = ""
@@ -76,9 +76,14 @@ function generate(completion) {
 	const secure = document.getElementById("secure").value
 	const subText = document.getElementById("subText").value
 	const size = document.getElementById("size").value
-
-	render(lines, imgData, secure, subText, size, completion)
+	const logoPos = document.getElementById("logo_pos").checked
+	
+	render(lines, imgData, secure, subText, size, logoPos, completion)
 }
 
 setup()
 document.getElementById("inp").addEventListener("change", readFile)
+
+render(["Albert", "Einstein"], "img/pattern_bg_ow_sq.png", "Österåker", "E=MC2", "1080", false, c => {
+	document.body.appendChild(c)
+})

@@ -1,8 +1,8 @@
 function settings() {
-	return '<h1>Ruta 2</h1><p id="note">Du behöver inte ange namn och beskrivning</p><h3>Bakgrundsbild</h3><input id="inp" type="file"><h3>Namn</h3><input id="name"><h3>Beskrivning</h3><textarea id="description" cols="30" rows="2"></textarea><h3>Text</h3><textarea id="textlines" cols="30" rows="10"></textarea>'
+	return '<h1>Ruta 2</h1><p id="note">Du behöver inte ange namn och beskrivning</p><h3>Bakgrundsbild</h3><input id="inp" type="file"><h3>Namn</h3><input id="name"><h3>Beskrivning</h3><textarea id="description" cols="30" rows="2"></textarea><h3>Text</h3><textarea id="textlines" cols="30" rows="10"></textarea><h3>Logga</h3><p><b>Positiv</b> <input type="checkbox" id="logo_pos"></p>'
 }
 
-function render(lines, name, description, bgImgData, complete) {
+function render(lines, name, description, bgImgData, logoPos, complete) {
 	document.fonts.ready.then(function () {
 		var canvas = document.createElement("canvas")
 		canvas.height = "1080"
@@ -35,9 +35,9 @@ function render(lines, name, description, bgImgData, complete) {
 			
 			// Draw logo
 			var logoImg = new Image()
-			logoImg.src = "img/s-logo_standing_neg_1000.png"
+			logoImg.src = "img/s-logo_standing_" + (logoPos ? "pos" : "neg") + ".svg"
 			logoImg.onload = function() {
-				ctx.drawImage(this, 815, 85, this.width / 5.5, this.height / 5.5)
+				ctx.drawImage(this, 815, 85, this.width / 2.5, this.height / 2.5)
 				
 				complete(canvas)
 			}
@@ -69,9 +69,11 @@ function generate(completion) {
 	if (document.getElementById("description").value == "") {
 		description = []
 	}
-	var name = document.getElementById("name").value
 
-	render(lines, name, description, imgData, completion)
+	const name = document.getElementById("name").value
+	const logoPos = document.getElementById("logo_pos").checked
+
+	render(lines, name, description, imgData, logoPos, completion)
 }
 
 setup()

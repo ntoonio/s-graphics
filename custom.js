@@ -1,3 +1,11 @@
+function settings() {
+	return '<h1>Egen</h1><h3>Dimensioner</h3><p><b>Bredd</b> <input id="dimension_width" type="number" value="1080"></p><p><b>Höjd</b> <input id="dimension_height" type="number" value="1080"></p><h3>Bakgrundsbild</h3><input id="inp" type="file"><h3>Texter</h3><ul id="texts"></ul><input type="submit" value="Lägg till text" onclick="addText()"><h3>Logga</h3><select id="logo-select"><option value="standing-neg">Stående negativ</option><option value="standing-pos">Stående positiv</option><option value="laying-neg">Liggande negativ</option><option value="laying-pos">Liggande positiv</option></select><p><b>X</b> <input id="logo_pos_x" type="number" value="970"></p><p><b>Y</b> <input id="logo_pos_y" type="number" value="990"></p><p><b>Skala</b> <input id="logo_scale" type="number" value="3"></p>'
+}
+
+function textElementHTML() {
+	return '<h4>Text</h4><p><b>X</b> <input class="text_pos_x" type="number" value="0"></p><p><b>Y</b> <input class="text_pos_y" type="number" value="0"><p><b>Storlek</b> <input class="text_size" type="number" value="70"></p></p><textarea class="text_text" cols="30" rows="5"></textarea><p><b>Justering</b> <select class="text_justify"><option value="normal">Normal</option><option value="center">Center</option><option value="width">Vidd-anpassad</option></select></p><input class="text_remove" type="submit" value="Ta bort text">'
+}
+
 function render(json, complete) {
 	document.fonts.ready.then(function () {
 		var canvas = document.createElement("canvas")
@@ -28,7 +36,7 @@ function render(json, complete) {
 			})
 			
 			var logoImg = new Image()
-			logoImg.src = "img/s-logo_" + json.logo.img.replace("-", "_") + "_1000.png"
+			logoImg.src = "img/s-logo_" + json.logo.img.replace("-", "_") + ".svg"
 
 			logoImg.onload = function() {
 				const l = json.logo
@@ -41,14 +49,6 @@ function render(json, complete) {
 			}
 		}
 	})
-}
-
-function settings() {
-	return '<h1>Egen</h1><h3>Dimensioner</h3><p><b>Bredd</b> <input id="dimension_width" type="number" value="1080"></p><p><b>Höjd</b> <input id="dimension_height" type="number" value="1080"></p><h3>Bakgrundsbild</h3><input id="inp" type="file"><h3>Texter</h3><ul id="texts"></ul><input type="submit" value="Lägg till text" onclick="addText()"><h3>Logga</h3><select id="logo-select"><option value="standing-neg">Stående negativ</option><option value="standing-pos">Stående positiv</option><option value="laying-neg">Liggande negativ</option><option value="laying-pos">Liggande positiv</option></select><p><b>X</b> <input id="logo_pos_x" type="number" value="0"></p><p><b>Y</b> <input id="logo_pos_y" type="number" value="0"></p><p><b>Skala</b> <input id="logo_scale" type="number" value="8"></p>'
-}
-
-function textElementHTML() {
-	return '<h4>Text</h4><p><b>X</b> <input class="text_pos_x" type="number" value="0"></p><p><b>Y</b> <input class="text_pos_y" type="number" value="0"><p><b>Storlek</b> <input class="text_size" type="number" value="70"></p></p><textarea class="text_text" cols="30" rows="5"></textarea><p><b>Justering</b> <select class="text_justify"><option value="normal">Normal</option><option value="center">Center</option><option value="width">Vidd-anpassad</option></select></p><input class="text_remove" type="submit" value="Ta bort text">'
 }
 
 function addText() {

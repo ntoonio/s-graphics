@@ -1,4 +1,8 @@
-function render(lines, bgImgData, secure, complete) {
+function settings() {
+	return '<h1>Instagram story</h1><h3>Bakgrundsbild</h3><input id="inp" type="file"><h3>Text</h3><textarea id="textlines" cols="30" rows="10"></textarea><h3>Ett tryggare...</h3><input id="secure" type="text" value="Sverige"><h3>Logga</h3><p><b>Positiv</b> <input type="checkbox" id="logo_pos"></p>'
+}
+
+function render(lines, bgImgData, secure, logoPos, complete) {
 	document.fonts.ready.then(function () {
 		var canvas = document.createElement("canvas")
 		canvas.height = "1920"
@@ -23,18 +27,14 @@ function render(lines, bgImgData, secure, complete) {
 
 			// Draw logo
 			var logoImg = new Image()
-			logoImg.src = "img/s-logo_standing_neg_1000.png"
+			logoImg.src = "img/s-logo_standing_" + (logoPos ? "pos" : "neg") + ".svg"
 			logoImg.onload = function() {
-				ctx.drawImage(this, 830, 1520, this.width / 4.5, this.height / 4.5)
+				ctx.drawImage(this, 800, 1520, this.width / 1.6, this.height / 1.6)
 				
 				complete(canvas)
 			}
 		}
 	})
-}
-
-function settings() {
-	return '<h1>Instagram story</h1><h3>Bakgrundsbild</h3><input id="inp" type="file"><h3>Text</h3><textarea id="textlines" cols="30" rows="10"></textarea><h3>Ett tryggare...</h3><input id="secure" type="text" value="Sverige">'
 }
 
 var imgData = ""
@@ -52,8 +52,9 @@ function readFile() {
 function generate(completion) {
 	const lines = document.getElementById("textlines").value.split("\n")
 	const secure = document.getElementById("secure").value
+	const logoPos = document.getElementById("logo_pos").checked
 
-	render(lines, imgData, secure, completion)
+	render(lines, imgData, secure, logoPos, completion)
 }
 
 setup()
