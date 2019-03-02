@@ -1,0 +1,110 @@
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+		<link rel="stylesheet" href="style.css">
+		
+		<style>
+			body {
+				margin: 0 5px 0 5px;
+			}
+
+			.font-prerenderer {
+				font-size: 0px;
+				margin: 0;
+				opacity: 0;
+			}
+
+			#canvas {
+				margin-top: 1%;
+
+  				max-height: 98vh;
+  				max-width: 50vw;
+			}
+
+			.settings-note {
+				width: 50%;
+			}
+		</style>
+	</head>
+	
+	<body>
+		<div>
+			<div id="settings" style="display: inline-block; vertical-align:top; width: 45%;">
+					<input type="submit" value="Generera" onclick="start_generate()">
+					<br>
+					<input type="submit" value="Ladda ner" onclick="start_download()">
+			</div>
+			<div id="output-data" style="display: inline-block; vertical-align:top; width: 45%;">
+			</div>
+		</div>
+
+		<!-- Prerender fonts so that they're loaded -->
+		<p class="font-prerenderer" style="font-family: Kapra Neue Custom">Hej</p>	
+		<p class="font-prerenderer" style="font-family: Avenir LT Std; font-weight: 900">Hej</p>	
+		<p class="font-prerenderer" style="font-family: Avenir LT Std; font-weight: 400;">Hej</p>	
+	</body>
+	
+	<script src="canvas_lib.js"></script>
+
+	<script>
+		function setup() {
+			document.getElementById("settings").innerHTML = settings() + "<br>" + document.getElementById("settings").innerHTML
+		}
+		
+		function start_generate() {
+			const c = document.getElementById("canvas")
+			if (c != undefined) {
+				c.remove()
+			}
+
+			generate(function (canvas) {
+				canvas.id = "canvas"
+				document.getElementById("output-data").appendChild(canvas)
+			})
+		}
+
+		function getDate() {
+			function pad(s) {
+				if (s.toString().length == 1) {
+					return "0" + s
+				}
+				return s.toString()
+			}
+
+			const d = new Date()
+			return d.getFullYear() + pad(d.getMonth()) + pad(d.getDay()) + "-" + pad(d.getHours()) + pad(d.getMinutes()) + pad(d.getSeconds())
+		}
+
+		function start_download() {
+			if (document.getElementById("canvas") != undefined) {
+				download()
+			}
+			else {
+				generate(function (canvas) {
+					canvas.id = "canvas"
+					document.getElementById("output-data").appendChild(canvas)
+					download()
+				})
+			}
+		}
+
+		function download() {
+			const data = document.getElementById("canvas").toBlob(function (data) {
+				const a = document.createElement("a")
+				a.href = window.URL.createObjectURL(data)
+				a.download = "s-image-" + getDate() + ".png"
+				document.body.appendChild(a)
+				a.click()
+				
+				setTimeout(function(){
+					window.URL.revokeObjectURL(a.href);  
+					a.remove()
+				}, 100)
+			})
+		}
+
+		const s = document.createElement("script")
+		s.src = new URL(window.location.href).searchParams.get("format") + ".js"
+		document.body.appendChild(s)
+	</script>
+</html>
