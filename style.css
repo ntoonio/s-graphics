@@ -1,6 +1,6 @@
 @font-face {
 	font-family: "Kapra Neue Custom";
-	src: local("Kapra Neue Custom"), url("https://socialdemokraterna.se/build/fonts/KapraNeueCustom-Bold.eot?#iefix") format("embedded-opentype"), url("https://socialdemokraterna.se/build/fonts/KapraNeueCustom-Bold.woff") format("woff"), url("https://socialdemokraterna.se/build/fonts/KapraNeueCustom-Bold.ttf") format("truetype");
+	src: local("Kapra Neue Custom Bold"), url("https://socialdemokraterna.se/build/fonts/KapraNeueCustom-Bold.eot?#iefix") format("embedded-opentype"), url("https://socialdemokraterna.se/build/fonts/KapraNeueCustom-Bold.woff") format("woff"), url("https://socialdemokraterna.se/build/fonts/KapraNeueCustom-Bold.ttf") format("truetype");
 	font-style: normal;
 	font-weight: 700;
 }
@@ -14,7 +14,7 @@
 
 @font-face {
 	font-family: "Avenir LT Std";
-	src: local("Avenir LT Std"), url("https://socialdemokraterna.sehttps://socialdemokraterna.se/build/fonts/AvenirLTStd-Black.eot?#iefix") format("embedded-opentype"), url("https://socialdemokraterna.se/build/fonts/AvenirLTStd-Black.woff") format("woff"), url("https://socialdemokraterna.se/build/fonts/AvenirLTStd-Black.ttf") format("truetype"), url("https://socialdemokraterna.se/build/fonts/AvenirLTStd-Black.svg#AvenirLTStd-Black") format("svg");
+	src: local("Avenir LT Std"), url("https://socialdemokraterna.se/build/fonts/AvenirLTStd-Black.eot?#iefix") format("embedded-opentype"), url("https://socialdemokraterna.se/build/fonts/AvenirLTStd-Black.woff") format("woff"), url("https://socialdemokraterna.se/build/fonts/AvenirLTStd-Black.ttf") format("truetype"), url("https://socialdemokraterna.se/build/fonts/AvenirLTStd-Black.svg#AvenirLTStd-Black") format("svg");
 	font-style: normal;
 	font-weight: 900;
 }

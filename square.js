@@ -1,8 +1,8 @@
 function settings() {
-	return '<h1>Ruta</h1><h3>Bakgrundsbild</h3><input id="inp" type="file"><h3>Text</h3><textarea id="textlines" cols="30" rows="10"></textarea><h3>Logga</h3><p><b>Positiv</b> <input type="checkbox" id="logo_pos"></p>'
+	return '<h1>Ruta</h1><h3>Bakgrundsbild</h3><input id="inp" type="file"><h3>Text</h3><textarea id="textlines" cols="30" rows="10"></textarea>'
 }
 
-function render(lines, bgImgData, logoPos, complete) {
+function render(lines, bgImgData, complete) {
 	document.fonts.ready.then(function () {
 		var canvas = document.createElement("canvas")
 		canvas.height = "1080"
@@ -31,7 +31,7 @@ function render(lines, bgImgData, logoPos, complete) {
 			
 			// Draw logo
 			var logoImg = new Image()
-			logoImg.src = "img/s-logo/laying_" + (logoPos ? "pos" : "neg") + ".svg"
+			logoImg.src = "img/s-logo/laying_neg.svg"
 			logoImg.onload = function() {
 				ctx.drawImage(this, 750, 1000, this.width / 1.5, this.height / 1.5)
 				
@@ -60,9 +60,7 @@ function generate(completion) {
 		lines = []
 	}
 
-	const logoPos = document.getElementById("logo_pos").checked
-
-	render(lines, imgData, logoPos, completion)
+	render(lines, imgData, completion)
 }
 
 setup()
