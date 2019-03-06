@@ -22,25 +22,27 @@ function render(lines, bgImgData, secure, subText, canvasSize, logoPos, complete
 		backgorundImg.onload = function() {
 			ctx.drawImage(this, 0, 0, canvas.width, canvas.height)
 			
+			const marginBottom = 120/1080*canvasSize
+
 			const mainTextSize = 115/1080*canvasSize
 			const mainTextPadding = mainTextSize * 0.0625
 			const mainTextMarginLeft = 80/1080*canvasSize
-
-			const subTextsMarginLeft = mainTextMarginLeft - mainTextPadding + 55 * 0.0625
 			
-			const marginBottom = 120/1080*canvasSize
+			const subTextSize = 55/1080*canvasSize
+			const subTextsMarginLeft = mainTextMarginLeft - mainTextPadding + 55 * 0.0625
+
+			const marginTopSubText = ctx.canvas.height - marginBottom - subTextSize
+			const marginTopMainText = marginTopSubText - mainTextSize * lines.length + 10/1080*canvasSize
+			const marginTopVoteFor = marginTopMainText - subTextSize - 5/1080*canvasSize
 
 			// Draw sub text
-			const subText1Size = 55/1080*canvasSize
-			const marginTop1 = ctx.canvas.height - marginBottom - subText1Size
-			sText(ctx, ["!7" + subText], subText1Size, subTextsMarginLeft, marginTop1)
+			sText(ctx, ["!7" + subText], subTextSize, subTextsMarginLeft, marginTopSubText)
+			
+			// Draw "Vote for" text
+			sText(ctx, ["!3Rösta på"], subTextSize, subTextsMarginLeft, marginTopVoteFor)
 
 			// Draw main text
-			const marginTop2 = marginTop1 - mainTextSize * lines.length + 10/1080*canvasSize
-			sText(ctx, lines, mainTextSize, mainTextMarginLeft, marginTop2)
-			
-			const marginTop3 = marginTop2 - 55/1080*canvasSize - 5/1080*canvasSize
-			sText(ctx, ["!3Rösta på"], 55/1080*canvasSize, subTextsMarginLeft, marginTop3)
+			sText(ctx, lines, mainTextSize, mainTextMarginLeft, marginTopMainText)
 
 			// Draw sub-text
 			ctx.font = 40/1080*canvasSize + "px Kapra Neue Custom"
