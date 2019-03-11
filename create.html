@@ -32,7 +32,7 @@
 			<div id="settings" style="display: inline-block; vertical-align:top; width: 45%;">
 					<input type="submit" value="Generera" onclick="start_generate()">
 					<br>
-					<input type="submit" value="Ladda ner" onclick="start_download()">
+					<input type="submit" value="Ladda ner" onclick="downloadCanvas()">
 			</div>
 			<div id="output-data" style="display: inline-block; vertical-align:top; width: 45%;">
 			</div>
@@ -75,32 +75,32 @@
 			return d.getFullYear() + pad(d.getMonth()) + pad(d.getDay()) + "-" + pad(d.getHours()) + pad(d.getMinutes()) + pad(d.getSeconds())
 		}
 
-		function start_download() {
+		function downloadCanvas() {
 			if (document.getElementById("canvas") != undefined) {
-				download()
+				const data = document.getElementById("canvas").toBlob(function (data) {
+					download(window.URL.createObjectURL(data))
+				})
 			}
 			else {
 				generate(function (canvas) {
 					canvas.id = "canvas"
 					document.getElementById("output-data").appendChild(canvas)
-					download()
+					downloadCanvas()
 				})
 			}
 		}
 
-		function download() {
-			const data = document.getElementById("canvas").toBlob(function (data) {
-				const a = document.createElement("a")
-				a.href = window.URL.createObjectURL(data)
-				a.download = "s-image-" + getDate() + ".png"
-				document.body.appendChild(a)
-				a.click()
-				
-				setTimeout(function(){
-					window.URL.revokeObjectURL(a.href);  
-					a.remove()
-				}, 100)
-			})
+		function download(url, format=".png") {
+			const a = document.createElement("a")
+			a.href = url
+			a.download = "s-image-" + getDate() + format
+			document.body.appendChild(a)
+			a.click()
+			
+			setTimeout(function(){
+				window.URL.revokeObjectURL(a.href);  
+				a.remove()
+			}, 100)
 		}
 
 		const s = document.createElement("script")

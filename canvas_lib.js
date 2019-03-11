@@ -121,7 +121,7 @@ function sTextWidthFitted(ctx, lines, width, padding, marginLeft, marginTop, com
 
 	var p = marginTop
 	
-	lines.forEach(line => {
+	lines.forEach((line, i) => {
 		const style = styles[getStyle(line)]
 		line = line.replace(/^!\d/, "").toUpperCase()
 
@@ -130,9 +130,8 @@ function sTextWidthFitted(ctx, lines, width, padding, marginLeft, marginTop, com
 		const fs = 100 * width / ctx.measureText(line).width
 		ctx.font = fs + "px Kapra Neue Custom"
 		
-		if (compensateAAO && line === lines[0].toUpperCase()) {
-			const firstLine = lines[0].toUpperCase()
-			if (firstLine.includes("Å") || firstLine.includes("Ä") || firstLine.includes("Ö")) {
+		if (compensateAAO && i == 0) {
+			if (line.includes("Å") || line.includes("Ä") || line.includes("Ö")) {
 				p += 0.13 * fs
 			}
 		}
@@ -158,14 +157,13 @@ function sTextWidthFitted(ctx, lines, width, padding, marginLeft, marginTop, com
 
 function getWidthFittedHeight(ctx, lines, width, padding, compensateAAO) {
 	var p = 0
-	lines.forEach(line => {
+	lines.forEach((line, i) => {
 		line = line.replace(/^!\d/, "").toUpperCase()
 		ctx.font = "100px Kapra Neue Custom"
 		const fs = 100 * width / ctx.measureText(line).width
-
-		if (compensateAAO && line === lines[0].toUpperCase()) {
-			const firstLine = lines[0].toUpperCase()
-			if (firstLine.includes("Å") || firstLine.includes("Ä") || firstLine.includes("Ö")) {
+		
+		if (compensateAAO && i == 0) {
+			if (line.includes("Å") || line.includes("Ä") || line.includes("Ö")) {
 				p += 0.13 * fs
 			}
 		}
