@@ -12,14 +12,14 @@ function render(lines, bgImgData, secure, canvasSize, logoPos, complete) {
 		var backgorundImg = new Image()
 		backgorundImg.src = bgImgData
 
-		backgorundImg.onload = function() {
-			ctx.drawImage(this, 0, 0, canvas.width, canvas.height)
+		function startRender() {
+			ctx.drawImage(backgorundImg, 0, 0, canvas.width, canvas.height)
 
 			// Draw main text
 			// canvasHeight - marginBottom - fontSize * lines.length
 			const marginTop = ctx.canvas.height - 0.1008064516 * canvasSize - 0.1048387097 * canvasSize * lines.length
 			sText(ctx, lines, 0.1048387097 * canvasSize, 0.07258064516 * canvasSize, marginTop)
-			
+
 			// Draw sub-text
 			ctx.font = 0.03629032258 * canvasSize + "px Kapra Neue Custom"
 			ctx.fillStyle = "white"
@@ -30,9 +30,16 @@ function render(lines, bgImgData, secure, canvasSize, logoPos, complete) {
 			logoImg.src = "img/s-logo/standing_" + (logoPos ? "pos" : "neg") + ".svg"
 			logoImg.onload = function() {
 				ctx.drawImage(this, 0.7580645161 * canvasSize, 1.185483871 * canvasSize, this.width / 1.8/1080*canvasSize, this.height / 1.8/1080*canvasSize)
-				
+
 				complete(canvas)
 			}
+		}
+
+		if (backgorundImg.onload == "") {
+			startRender()
+		}
+		else {
+			backgorundImg.onload = startRender()
 		}
 	})
 }

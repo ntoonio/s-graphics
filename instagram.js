@@ -7,13 +7,13 @@ function render(lines, bgImgData, secure, logoPos, complete) {
 		var canvas = document.createElement("canvas")
 		canvas.height = "1920"
 		canvas.width = "1080"
-		
+
 		var ctx = canvas.getContext("2d")
 		var backgorundImg = new Image()
 		backgorundImg.src = bgImgData
 
-		backgorundImg.onload = function() {
-			ctx.drawImage(this, 0, 0, canvas.width, canvas.height)
+		function startRender() {
+			ctx.drawImage(backgorundImg, 0, 0, canvas.width, canvas.height)
 
 			// Draw main text
 			// canvasHeight - marginBottom - fontSize * lines.length
@@ -30,9 +30,16 @@ function render(lines, bgImgData, secure, logoPos, complete) {
 			logoImg.src = "img/s-logo/standing_" + (logoPos ? "pos" : "neg") + ".svg"
 			logoImg.onload = function() {
 				ctx.drawImage(this, 800, 1520, this.width / 1.6, this.height / 1.6)
-				
+
 				complete(canvas)
 			}
+		}
+
+		if (backgorundImg.onload == "") {
+			startRender()
+		}
+		else {
+			backgorundImg.onload = startRender()
 		}
 	})
 }

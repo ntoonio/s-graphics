@@ -19,15 +19,15 @@ function render(lines, bgImgData, secure, subText, canvasSize, logoPos, complete
 		var backgorundImg = new Image()
 		backgorundImg.src = bgImgData
 
-		backgorundImg.onload = function() {
-			ctx.drawImage(this, 0, 0, canvas.width, canvas.height)
-			
+		function startRender() {
+			ctx.drawImage(backgorundImg, 0, 0, canvas.width, canvas.height)
+
 			const marginBottom = 120/1080*canvasSize
 
 			const mainTextSize = 115/1080*canvasSize
 			const mainTextPadding = mainTextSize * 0.0625
 			const mainTextMarginLeft = 80/1080*canvasSize
-			
+
 			const subTextSize = 55/1080*canvasSize
 			const subTextsMarginLeft = mainTextMarginLeft - mainTextPadding + 55 * 0.0625
 
@@ -37,7 +37,7 @@ function render(lines, bgImgData, secure, subText, canvasSize, logoPos, complete
 
 			// Draw sub text
 			sText(ctx, ["!7" + subText], subTextSize, subTextsMarginLeft, marginTopSubText)
-			
+
 			// Draw "Vote for" text
 			sText(ctx, ["!3Rösta på"], subTextSize, subTextsMarginLeft, marginTopVoteFor)
 
@@ -54,9 +54,16 @@ function render(lines, bgImgData, secure, subText, canvasSize, logoPos, complete
 			logoImg.src = "img/s-logo/standing_" + (logoPos ? "pos" : "neg") + ".svg"
 			logoImg.onload = function() {
 				ctx.drawImage(this, 820/1080*canvasSize, ctx.canvas.height - 250/1080*canvasSize, this.width / 1.8/1080*canvasSize, this.height / 1.8/1080*canvasSize)
-				
+
 				complete(canvas)
 			}
+		}
+
+		if (backgorundImg.onload == "") {
+			startRender()
+		}
+		else {
+			backgorundImg.onload = startRender()
 		}
 	})
 }
@@ -79,7 +86,7 @@ function generate(completion) {
 	const subText = document.getElementById("subText").value
 	const size = document.getElementById("size").value
 	const logoPos = document.getElementById("logo_pos").checked
-	
+
 	render(lines, imgData, secure, subText, size, logoPos, completion)
 }
 

@@ -11,14 +11,14 @@ function render(json, complete) {
 		var canvas = document.createElement("canvas")
 		canvas.width = json.width
 		canvas.height = json.height
-		
+
 		var ctx = canvas.getContext("2d")
 
 		var backgorundImg = new Image()
 		backgorundImg.src = json.bgImg
-		
-		backgorundImg.onload = function() {
-			ctx.drawImage(this, 0, 0, canvas.width, canvas.height)
+
+		function startRender() {
+			ctx.drawImage(backgorundImg, 0, 0, canvas.width, canvas.height)
 
 			json.texts.forEach(text => {
 				const lines = text.text.split("\n")
@@ -34,7 +34,7 @@ function render(json, complete) {
 					sText(ctx, lines, text.size, text.x, text.y, true)
 				}
 			})
-			
+
 			var logoImg = new Image()
 			logoImg.src = "img/s-logo/" + json.logo.img.replace("-", "_") + ".svg"
 
@@ -48,6 +48,13 @@ function render(json, complete) {
 				complete(canvas)
 			}
 		}
+
+		if (backgorundImg.onload == "") {
+			startRender()
+		}
+		else {
+			backgorundImg.onload = startRender()
+		}
 	})
 }
 
@@ -55,7 +62,7 @@ function addText() {
 	const li = document.createElement("li")
 	li.innerHTML = textElementHTML()
 	li.getElementsByClassName("text_remove")[0].addEventListener("click", function () {this.parentElement.remove()})
-	
+
 	document.getElementById("texts").appendChild(li)
 }
 

@@ -7,36 +7,43 @@ function render(lines, bgImgData, complete) {
 		var canvas = document.createElement("canvas")
 		canvas.height = "1080"
 		canvas.width = "1080"
-		
+
 		var ctx = canvas.getContext("2d")
 		var backgorundImg = new Image()
 		backgorundImg.src = bgImgData
-		
-		backgorundImg.onload = function() {
-			ctx.drawImage(this, 0, 0, canvas.width, canvas.height)
-			
+
+		function startRender() {
+			ctx.drawImage(backgorundImg, 0, 0, canvas.width, canvas.height)
+
 			ctx.fillStyle = sRed
 			rect(ctx, 0, 980, 1080, 100)
-			
+
 			// Draw main text
-			
+
 			// canvasHeight - marginBottom - fontSize * lines.length
 			const marginTop = ctx.canvas.height - 150 - 120 * lines.length
 			sText(ctx, lines, 120, 70, marginTop)
-			
+
 			// Draw sub-text
 			ctx.font = "32px Kapra Neue Custom"
 			ctx.fillStyle = "white"
 			ctx.fillText("Ett starkare samhälle. Ett tryggare Sverige.".toUpperCase(), 30, 1045)
-			
+
 			// Draw logo
 			var logoImg = new Image()
 			logoImg.src = "img/s-logo/laying_neg.svg"
 			logoImg.onload = function() {
 				ctx.drawImage(this, 750, 1000, this.width / 1.5, this.height / 1.5)
-				
+
 				complete(canvas)
 			}
+		}
+
+		if (backgorundImg.onload == "") {
+			startRender()
+		}
+		else {
+			backgorundImg.onload = startRender()
 		}
 	})
 }
